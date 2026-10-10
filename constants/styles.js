@@ -1,0 +1,40 @@
+const colors = {
+  ink900: "#1A1A1A",
+  gray600: "#5C5A55",
+  gray400: "#A19D94",
+  gray200: "#E6E0D6",
+  paper50: "#FFF8EC",
+  paper100: "#F3EBDD",
+  white: "#FFFFFF",
+  yellow100: "#FFF1B8",
+  yellow300: "#FFD84D",
+  pink300: "#FF9EC4",
+  mint300: "#7EE0C3",
+  sky300: "#8EC5FF",
+  lilac300: "#C7B5FF",
+  error100: "#FFE1E1",
+  error500: "#E5484D",
+  scrim: "rgba(255,248,236,0.85)",
+  tape: "rgba(255,255,255,0.7)",
+};
+
+export const GlobalStyles = {
+  colors,
+
+  fonts: {
+    hero: { fontFamily: "jua", fontSize: 40, lineHeight: 48 },
+    display: { fontFamily: "jua", fontSize: 28, lineHeight: 36 },
+    number: { fontFamily: "jua", fontSize: 26, lineHeight: 32 },
+    day: { fontFamily: "jua", fontSize: 24, lineHeight: 28 },
+    title: { fontFamily: "pretendard-bold", fontSize: 18, lineHeight: 24 },
+    header: { fontFamily: "pretendard-bold", fontSize: 17, lineHeight: 22 },
+    button: { fontFamily: "pretendard-bold", fontSize: 16, lineHeight: 22 },
+    body: { fontFamily: "pretendard", fontSize: 16, lineHeight: 22 },
+    note: { fontFamily: "gowun-bold", fontSize: 16, lineHeight: 24 },
+    label: { fontFamily: "pretendard-semibold", fontSize: 13, lineHeight: 18 },
+    sub: { fontFamily: "pretendard", fontSize: 13, lineHeight: 18 },
+    caption: { fontFamily: "pretendard", fontSize: 12, lineHeight: 16 },
+    tab: { fontFamily: "pretendard-bold", fontSize: 12, lineHeight: 16 },
+    emoji: { fontSize: 24, lineHeight: 30 },
+  },
+};
