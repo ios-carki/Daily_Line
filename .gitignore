@@ -39,3 +39,12 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# server (FastAPI)
+server/.venv/
+server/app.db
+__pycache__/
+.env
+
+# documents
+docs/
