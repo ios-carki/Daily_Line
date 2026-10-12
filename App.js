@@ -11,6 +11,9 @@ import Fab from "./components/UI/Fab";
 import TextLink from "./components/UI/TextLink";
 import Input from "./components/UI/Input";
 import PasswordMeter from "./components/Auth/PasswordMeter";
+import ErrorBanner from "./components/UI/ErrorBanner";
+import LoadingOverlay from "./components/UI/LoadingOverlay";
+import ErrorOverlay from "./components/UI/ErrorOverlay";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,7 +33,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.tempContainer}>
+      <ErrorOverlay message="서버에 연결할 수 없어요. 서버가 켜져있는지 확인해주세요." />
+      {/* <View style={styles.tempContainer}>
         <Button children="버튼a" style={{ flex: 1 }} />
         <Button children="버튼a" style={{ flex: 1 }} />
       </View>
@@ -39,8 +43,13 @@ export default function App() {
       <Fab />
       <TextLink>회원가입</TextLink>
       <View style={styles.tempContainer2}>
-        <PasswordMeter level={1}/>
+        <ErrorBanner>
+          서버에 연결할 수 없어요.
+          {"\n"}
+          서버가 켜져 있는지 확인해주세요.
+        </ErrorBanner>
       </View>
+    <LoadingOverlay message="로"></LoadingOverlay> */}
     </View>
   );
 }
