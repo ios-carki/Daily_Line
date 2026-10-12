@@ -10,6 +10,7 @@ import CircleButton from "./components/UI/CircleButton";
 import Fab from "./components/UI/Fab";
 import TextLink from "./components/UI/TextLink";
 import Input from "./components/UI/Input";
+import PasswordMeter from "./components/Auth/PasswordMeter";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -38,45 +39,7 @@ export default function App() {
       <Fab />
       <TextLink>회원가입</TextLink>
       <View style={styles.tempContainer2}>
-        <Input
-          title={"이메일"}
-          invalid={false}
-          placeholder={"you@example.com"}
-        />
-        <Input
-          title={"이메일"}
-          invalid={true}
-          errorText={"형식이 틀려요"}
-          value={"demo@example"}
-        />
-        <Input
-          title={"비밀번호"}
-          errorText={"형식이 틀려요"}
-          placeholder={"이메일 입력"}
-          secureTextEntry={true}
-          value={"asd"}
-        />
-        <Input
-          title={"이메일"}
-          invalid={false}
-          help={"바꿀 수 없어요"}
-          placeholder={"이메일 입력"}
-          editable={false}
-          value={"asd"}
-        />
-        <Input
-          title={"소개"}
-          // invalid={true}
-          // errorText="형식이 틀려요"
-          showCounter={true}
-          placeholder={"나를 한 줄로"}
-          maxLength={60}
-          value={"ㅁㄴㅇ"}
-          multiline={true}
-          inputStyle={{
-            minHeight: 100,
-          }}
-        />
+        <PasswordMeter level={1}/>
       </View>
     </View>
   );
