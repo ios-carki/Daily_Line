@@ -14,6 +14,7 @@ import PasswordMeter from "./components/Auth/PasswordMeter";
 import ErrorBanner from "./components/UI/ErrorBanner";
 import LoadingOverlay from "./components/UI/LoadingOverlay";
 import ErrorOverlay from "./components/UI/ErrorOverlay";
+import Avatar from "./components/UI/Avatar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,7 +34,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <ErrorOverlay message="서버에 연결할 수 없어요. 서버가 켜져있는지 확인해주세요." />
+      {/* <ErrorOverlay message="서버에 연결할 수 없어요. 서버가 켜져있는지 확인해주세요." /> */}
+      <Avatar name=" 철수" onEdit={() => {}} />
       {/* <View style={styles.tempContainer}>
         <Button children="버튼a" style={{ flex: 1 }} />
         <Button children="버튼a" style={{ flex: 1 }} />
