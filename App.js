@@ -14,9 +14,16 @@ import PasswordMeter from "./components/Auth/PasswordMeter";
 import ErrorBanner from "./components/UI/ErrorBanner";
 import LoadingOverlay from "./components/UI/LoadingOverlay";
 import ErrorOverlay from "./components/UI/ErrorOverlay";
-import Avatar from "./components/UI/Avatar";
+import Avatar from "./components/Home/Avatar";
+import StatsRow from "./components/Home/StatsRow";
 
 SplashScreen.preventAutoHideAsync();
+
+const DUMMY_ENTRIES = [
+  { id: 1, date: "2026-10-10", mood: 5 },
+  { id: 2, date: "2026-10-09", mood: 2 },
+  { id: 3, date: "2026-09-28", mood: 4 },
+];
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -36,6 +43,7 @@ export default function App() {
     <View style={styles.container}>
       {/* <ErrorOverlay message="서버에 연결할 수 없어요. 서버가 켜져있는지 확인해주세요." /> */}
       <Avatar name=" 철수" onEdit={() => {}} />
+      <StatsRow entries={DUMMY_ENTRIES}/>
       {/* <View style={styles.tempContainer}>
         <Button children="버튼a" style={{ flex: 1 }} />
         <Button children="버튼a" style={{ flex: 1 }} />
