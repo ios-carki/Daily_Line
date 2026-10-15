@@ -16,6 +16,7 @@ import LoadingOverlay from "./components/UI/LoadingOverlay";
 import ErrorOverlay from "./components/UI/ErrorOverlay";
 import Avatar from "./components/Home/Avatar";
 import StatsRow from "./components/Home/StatsRow";
+import MoodCalendar from "./components/Home/MoodCalendar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,25 +42,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* <ErrorOverlay message="서버에 연결할 수 없어요. 서버가 켜져있는지 확인해주세요." /> */}
-      <Avatar name=" 철수" onEdit={() => {}} />
-      <StatsRow entries={DUMMY_ENTRIES}/>
-      {/* <View style={styles.tempContainer}>
-        <Button children="버튼a" style={{ flex: 1 }} />
-        <Button children="버튼a" style={{ flex: 1 }} />
-      </View>
-      <CircleButton icon="settings-outline" disabled={true} />
-      <StatusBar style="auto" />
-      <Fab />
-      <TextLink>회원가입</TextLink>
-      <View style={styles.tempContainer2}>
-        <ErrorBanner>
-          서버에 연결할 수 없어요.
-          {"\n"}
-          서버가 켜져 있는지 확인해주세요.
-        </ErrorBanner>
-      </View>
-    <LoadingOverlay message="로"></LoadingOverlay> */}
+      <MoodCalendar entries={DUMMY_ENTRIES} />
     </View>
   );
 }
