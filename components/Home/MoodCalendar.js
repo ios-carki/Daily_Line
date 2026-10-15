@@ -1,32 +1,27 @@
 import { View, Text, StyleSheet } from "react-native";
+
 import { GlobalStyles } from "../../constants/styles";
 import ShadowBox from "../UI/ShadowBox";
+import { getThisMonth } from "../../util/date";
+import { MOODS } from "../../constants/moods";
 
 const WEEK = ["일", "월", "화", "수", "목", "금", "토"];
-const MOODS = [
-  {label: "최악", color: GlobalStyles.colors.mint300},
-  {label: "별로", color: GlobalStyles.colors.lilac300},
-  {label: "보통", color: GlobalStyles.colors.gray200},
-  {label: "좋음", color: GlobalStyles.colors.sky300},
-  {label: "최고", color: GlobalStyles.colors.yellow300},
-]
 
 function MoodCalendar({ entries = [], style }) {
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth();
+  const thisMonth = getThisMonth();
   const today = now.getDate();
 
-  const moodByDay = {}
-  entries
-    .filter((entry) => {
-      const [recordYear, recordMonth] = entry.date.split("-").map(Number);
+  const moodByDate = {};
+  entries.forEach((entry) => {
+    moodByDate[entry.date] = entry.mood;
+  });
 
-      return recordYear === year && recordMonth === month + 1;
-    })
-
-  const recordedDays = entries
-    .map((entry) => Number(entry.date.split("-")[2]));
+  const monthCount = entries.filter((entry) =>
+    entry.date.startsWith(thisMonth),
+  ).length;
 
   const blankCount = new Date(year, month, 1).getDay();
   const dayCount = new Date(year, month + 1, 0).getDate();
@@ -39,7 +34,7 @@ function MoodCalendar({ entries = [], style }) {
     <ShadowBox radius={20} faceStyle={styles.faceContainer} style={style}>
       <View style={styles.titleContainer}>
         <Text style={styles.monthTextStyle}>{month + 1}월 기분 달력</Text>
-        <Text style={styles.recordTextStyle}>{entries.length}일 기록</Text>
+        <Text style={styles.recordTextStyle}>{monthCount}일 기록</Text>
       </View>
       <View style={styles.dateContainer}>
         {WEEK.map((date, index) => (
@@ -56,9 +51,10 @@ function MoodCalendar({ entries = [], style }) {
       </View>
       <View style={styles.dayContainer}>
         {cells.map((day, index) => {
-          const isToday = day == today;
+          const isToday = day === today;
           const isFuture = day > today;
-          const isRecorded = recordedDays.includes(day)
+          const date = `${thisMonth}-${String(day).padStart(2, "0")}`;
+          const mood = moodByDate[date];
 
           return (
             <View key={index} style={styles.dayCell}>
@@ -67,15 +63,17 @@ function MoodCalendar({ entries = [], style }) {
                   style={[
                     styles.dayCellInner,
                     isToday && styles.todayCellInner,
-                    isRecorded && {backgroundColor: 'red'},
+                    mood && {
+                      backgroundColor:
+                        GlobalStyles.colors[MOODS[mood - 1].color],
+                    },
                     isFuture && styles.futureCellInner,
                   ]}
                 >
                   <Text
                     style={[
                       styles.defaultDateTextStyle,
-                      isToday && styles.todayDateTextStyle,
-                      isRecorded && styles.recordedDateTextStyle,
+                      mood && styles.recordedDateTextStyle,
                       isFuture && styles.futureDateTextStyle,
                     ]}
                   >
@@ -87,6 +85,19 @@ function MoodCalendar({ entries = [], style }) {
           );
         })}
       </View>
+      <View style={styles.legendContainer}>
+        {MOODS.map((moodInfo) => (
+          <View key={moodInfo.value} style={styles.moodContainer}>
+            <View
+              style={[
+                styles.moodDotStyle,
+                { backgroundColor: GlobalStyles.colors[moodInfo.color] },
+              ]}
+            />
+            <Text style={styles.moodTextStyle}>{moodInfo.label}</Text>
+          </View>
+        ))}
+      </View>
     </ShadowBox>
   );
 }
@@ -96,7 +107,6 @@ export default MoodCalendar;
 const styles = StyleSheet.create({
   faceContainer: {
     padding: 16,
-    gap: 12,
   },
   titleContainer: {
     flexDirection: "row",
@@ -113,7 +123,7 @@ const styles = StyleSheet.create({
   },
   dateContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    paddingTop: 12,
   },
   dateTextStyle: {
     ...GlobalStyles.fonts.caption,
@@ -124,6 +134,7 @@ const styles = StyleSheet.create({
   dayContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
+    paddingTop: 4,
   },
 
   // Day Cell
@@ -146,7 +157,7 @@ const styles = StyleSheet.create({
     borderColor: GlobalStyles.colors.ink900,
   },
   futureCellInner: {
-    backgroundColor: null,
+    backgroundColor: "transparent",
   },
 
   // Date Text
@@ -154,14 +165,33 @@ const styles = StyleSheet.create({
     ...GlobalStyles.fonts.caption,
     color: GlobalStyles.colors.ink900,
   },
-  todayDateTextStyle: {
-    ...GlobalStyles.fonts.label,
-  },
   recordedDateTextStyle: {
     ...GlobalStyles.fonts.label,
   },
   futureDateTextStyle: {
     ...GlobalStyles.fonts.caption,
     color: GlobalStyles.colors.gray400,
+  },
+  legendContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    paddingTop: 10,
+  },
+  moodContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  moodDotStyle: {
+    width: 10,
+    height: 10,
+    borderWidth: 1.5,
+    borderRadius: 5,
+    borderColor: GlobalStyles.colors.ink900,
+  },
+  moodTextStyle: {
+    ...GlobalStyles.fonts.caption,
+    color: GlobalStyles.colors.gray600,
   },
 });
