@@ -17,13 +17,29 @@ import ErrorOverlay from "./components/UI/ErrorOverlay";
 import Avatar from "./components/Home/Avatar";
 import StatsRow from "./components/Home/StatsRow";
 import MoodCalendar from "./components/Home/MoodCalendar";
+import NoteCard from "./components/Home/NoteCard";
 
 SplashScreen.preventAutoHideAsync();
 
 const DUMMY_ENTRIES = [
-  { id: 1, date: "2026-10-10", mood: 5 },
-  { id: 2, date: "2026-10-09", mood: 2 },
-  { id: 3, date: "2026-09-28", mood: 4 },
+  {
+    id: 1,
+    date: "2026-10-10",
+    mood: 5,
+    content: "아침 산책하다가 본 하늘이 유난히 파랬다.",
+  },
+  {
+    id: 2,
+    date: "2026-10-09",
+    mood: 2,
+    content: "회의가 길어져서 점심을 거의 못 먹었다.",
+  },
+  {
+    id: 3,
+    date: "2026-09-28",
+    mood: 4,
+    content: "오랜만에 친구랑 통화. 웃다가 배 아픔.",
+  },
 ];
 
 export default function App() {
@@ -42,7 +58,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <MoodCalendar entries={DUMMY_ENTRIES} />
+      <View style={styles.tempContainer}>
+        <NoteCard entry={DUMMY_ENTRIES[0]} index={1} />
+        <NoteCard entry={DUMMY_ENTRIES[0]} index={2} />
+      </View>
     </View>
   );
 }

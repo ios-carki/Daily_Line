@@ -2,6 +2,7 @@
   "name": "rncourse_07_review",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
     "@expo/vector-icons": "^15.1.1",
     "@react-navigation/bottom-tabs": "^7.20.0",
