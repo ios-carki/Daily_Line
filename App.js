@@ -18,6 +18,7 @@ import Avatar from "./components/Home/Avatar";
 import StatsRow from "./components/Home/StatsRow";
 import MoodCalendar from "./components/Home/MoodCalendar";
 import NoteCard from "./components/Home/NoteCard";
+import EntryRow from "./components/Entries/EntryRow";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -59,8 +60,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.tempContainer}>
-        <NoteCard entry={DUMMY_ENTRIES[0]} index={1} />
-        <NoteCard entry={DUMMY_ENTRIES[0]} index={2} />
+        <EntryRow entry={DUMMY_ENTRIES[0]}/>
       </View>
     </View>
   );

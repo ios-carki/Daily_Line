@@ -8,3 +8,7 @@ export function moodToEmoji(moodValue) {
 export function moodToColor(moodValue) {
   return MOODS.find((mood) => mood.value === moodValue)?.color ?? "paper100";
 }
+
+export function moodToLabel(moodValue) {
+  return MOODS.find((mood) => mood.value === moodValue)?.label
+}
