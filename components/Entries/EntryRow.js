@@ -2,16 +2,18 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import ShadowBox from "../UI/ShadowBox";
 import { GlobalStyles } from "../../constants/styles";
 import { moodToColor, moodToEmoji, moodToLabel } from "../../util/mood";
-import { toEntryRowDay, toEntryRowWeek, toEntryRowYearMonth } from "../../util/date";
+import { getDateParts } from "../../util/date";
 
 function EntryRow({ entry, onPress }) {
+  const { year, month, day, weekday } = getDateParts(entry.date);
+
   return (
     <Pressable style={styles.container} onPress={onPress}>
       {({ pressed }) => (
         <>
           <ShadowBox faceStyle={[styles.faceContainer, {backgroundColor: GlobalStyles.colors[moodToColor(entry.mood)]}]} radius={14} offset={3}>
-            <Text style={styles.dateTextStyle}>{toEntryRowDay(entry.date)}</Text>
-            <Text style={styles.dayTextStyle}>{toEntryRowWeek(entry.date)}</Text>
+            <Text style={styles.dateTextStyle}>{day}</Text>
+            <Text style={styles.dayTextStyle}>{weekday}</Text>
           </ShadowBox>
 
           <View
@@ -22,7 +24,7 @@ function EntryRow({ entry, onPress }) {
           >
             <View style={styles.contentsMetaContainer}>
               <Text style={styles.emojiTextStyle}>{moodToEmoji(entry.mood)}</Text>
-              <Text style={styles.metaTextStyle}>{`${toEntryRowYearMonth(entry.date)} - ${moodToLabel(entry.mood)}`}</Text>
+              <Text style={styles.metaTextStyle}>{`${year}년 ${month}월 - ${moodToLabel(entry.mood)}`}</Text>
             </View>
 
             <Text numberOfLines={2} style={styles.contentsTextStyle}>

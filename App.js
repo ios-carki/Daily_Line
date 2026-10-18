@@ -1,5 +1,5 @@
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
@@ -19,6 +19,8 @@ import StatsRow from "./components/Home/StatsRow";
 import MoodCalendar from "./components/Home/MoodCalendar";
 import NoteCard from "./components/Home/NoteCard";
 import EntryRow from "./components/Entries/EntryRow";
+import DateStepper from "./components/Entries/DateStepper";
+import { getToday } from "./util/date";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -52,15 +54,18 @@ export default function App() {
     "gowun-bold": require("./assets/fonts/GowunBatang-Bold.ttf"),
   });
 
+  const [date, setDate] = useState(getToday())
+
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync();
   }, [fontsLoaded]);
   if (!fontsLoaded) return null;
 
+
   return (
     <View style={styles.container}>
       <View style={styles.tempContainer}>
-        <EntryRow entry={DUMMY_ENTRIES[0]}/>
+        <DateStepper value={date} onChange={setDate} />
       </View>
     </View>
   );
@@ -75,9 +80,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   tempContainer: {
-    flexDirection: "row",
+    // flexDirection: "row",
     gap: 12,
-    alignItems: "center",
+    // alignItems: "center",
     width: "100%",
   },
   tempContainer2: {

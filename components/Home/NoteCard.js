@@ -3,9 +3,11 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import ShadowBox from "../UI/ShadowBox";
 import { moodToColor, moodToEmoji } from "../../util/mood";
-import { toNoteCardDate } from "../../util/date";
+import { getDateParts, pad2 } from "../../util/date";
 
 function NoteCard({ entry, index, style, onPress }) {
+  const { month, day, weekday } = getDateParts(entry.date);
+
   return (
     <Pressable onPress={onPress}>
       {({ pressed }) => (
@@ -25,7 +27,7 @@ function NoteCard({ entry, index, style, onPress }) {
           <View style={styles.recordDateViewStyle}>
             <Text style={styles.emojiStyle}>{moodToEmoji(entry.mood)}</Text>
             <Text style={styles.dateTextStyle}>
-              {toNoteCardDate(entry.date)}
+              {`${pad2(month)}.${pad2(day)} ${weekday}`}
             </Text>
           </View>
           <Text style={styles.contentsTextStyle} numberOfLines={3}>
