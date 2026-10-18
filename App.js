@@ -21,6 +21,7 @@ import NoteCard from "./components/Home/NoteCard";
 import EntryRow from "./components/Entries/EntryRow";
 import DateStepper from "./components/Entries/DateStepper";
 import { getToday } from "./util/date";
+import MoodPicker from "./components/Entries/MoodPicker";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -54,7 +55,8 @@ export default function App() {
     "gowun-bold": require("./assets/fonts/GowunBatang-Bold.ttf"),
   });
 
-  const [date, setDate] = useState(getToday())
+  const [mood, setMood] = useState(null)
+
 
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync();
@@ -64,8 +66,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.tempContainer}>
-        <DateStepper value={date} onChange={setDate} />
+      <View style={styles.tempContainer2}>
+        <MoodPicker value={mood} onChange={setMood} invalid={true}/>
       </View>
     </View>
   );
@@ -80,9 +82,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   tempContainer: {
-    // flexDirection: "row",
+    flexDirection: "row",
     gap: 12,
-    // alignItems: "center",
     width: "100%",
   },
   tempContainer2: {
