@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { GlobalStyles } from "../../constants/styles";
 import { MOODS } from "../../constants/moods";
+import ErrorMessage from "../UI/ErrorMessage";
 
 function MoodPicker({ value, invalid, onChange, style }) {
   return (
@@ -23,10 +24,7 @@ function MoodPicker({ value, invalid, onChange, style }) {
         })}
       </View>
       {invalid && (
-        <View style={styles.invalidContainer}>
-          <Ionicons name="alert-circle" size={14} color={GlobalStyles.colors.error500} />
-          <Text style={styles.invalidTextStyle}>기분을 하나 골라주세요.</Text>
-        </View>
+        <ErrorMessage message="기분을 하나 골라주세요."/>
       )}
     </View>
   );
@@ -79,13 +77,4 @@ const styles = StyleSheet.create({
     ...GlobalStyles.fonts.label,
     color: GlobalStyles.colors.ink900,
   },
-  invalidContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4
-  },
-  invalidTextStyle: {
-    ...GlobalStyles.fonts.caption,
-    color: GlobalStyles.colors.error500
-  }
 });

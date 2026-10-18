@@ -22,6 +22,7 @@ import EntryRow from "./components/Entries/EntryRow";
 import DateStepper from "./components/Entries/DateStepper";
 import { getToday } from "./util/date";
 import MoodPicker from "./components/Entries/MoodPicker";
+import NoteInput from "./components/Entries/NoteInput";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -56,6 +57,7 @@ export default function App() {
   });
 
   const [mood, setMood] = useState(null)
+  const [input, setInput] = useState("")
 
 
   useEffect(() => {
@@ -67,7 +69,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.tempContainer2}>
-        <MoodPicker value={mood} onChange={setMood} invalid={true}/>
+        <NoteInput value={input} placeholder="오늘을 한 줄로 남겨보세요" onChangeText={setInput} />
       </View>
     </View>
   );
