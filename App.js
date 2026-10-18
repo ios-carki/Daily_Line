@@ -23,6 +23,7 @@ import DateStepper from "./components/Entries/DateStepper";
 import { getToday } from "./util/date";
 import MoodPicker from "./components/Entries/MoodPicker";
 import NoteInput from "./components/Entries/NoteInput";
+import FilterChips from "./components/Entries/FilterChips";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -38,6 +39,12 @@ const DUMMY_ENTRIES = [
     date: "2026-10-09",
     mood: 2,
     content: "회의가 길어져서 점심을 거의 못 먹었다.",
+  },
+  {
+    id: 4,
+    date: "2026-10-11",
+    mood: 2,
+    content: "회의가 길어져서 점심을 거의 못 먹었다.2",
   },
   {
     id: 3,
@@ -56,8 +63,9 @@ export default function App() {
     "gowun-bold": require("./assets/fonts/GowunBatang-Bold.ttf"),
   });
 
-  const [mood, setMood] = useState(null)
+  const [mood, setMood] = useState("all")
   const [input, setInput] = useState("")
+  
 
 
   useEffect(() => {
@@ -69,7 +77,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.tempContainer2}>
-        <NoteInput value={input} placeholder="오늘을 한 줄로 남겨보세요" onChangeText={setInput} />
+        <FilterChips entries={DUMMY_ENTRIES} value={mood} onChange={setMood}/>
       </View>
     </View>
   );
