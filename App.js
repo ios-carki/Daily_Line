@@ -25,6 +25,7 @@ import MoodPicker from "./components/Entries/MoodPicker";
 import NoteInput from "./components/Entries/NoteInput";
 import FilterChips from "./components/Entries/FilterChips";
 import AuthForm from "./components/Auth/AuthForm";
+import EntryForm from "./components/Entries/EntryForm";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -64,21 +65,23 @@ export default function App() {
     "gowun-bold": require("./assets/fonts/GowunBatang-Bold.ttf"),
   });
 
-  const [mood, setMood] = useState("all")
-  const [input, setInput] = useState("")
-  
-
+  const [mood, setMood] = useState("all");
+  const [input, setInput] = useState("");
 
   useEffect(() => {
     if (fontsLoaded) SplashScreen.hideAsync();
   }, [fontsLoaded]);
   if (!fontsLoaded) return null;
 
-
   return (
     <View style={styles.container}>
       <View style={styles.tempContainer2}>
-        <AuthForm isLogin={false} onSubmit={(data) => console.log(data)} onChange={() => {}}/>
+        <EntryForm
+          submitButtonLabel="제출"
+          onSubmit={() => {}}
+          onCancel={() => {}}
+          onChange={() => {}}
+        />
       </View>
     </View>
   );
