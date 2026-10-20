@@ -26,6 +26,7 @@ import NoteInput from "./components/Entries/NoteInput";
 import FilterChips from "./components/Entries/FilterChips";
 import AuthForm from "./components/Auth/AuthForm";
 import EntryForm from "./components/Entries/EntryForm";
+import ProfileForm from "./components/Profile/ProfileForm";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -56,6 +57,12 @@ const DUMMY_ENTRIES = [
   },
 ];
 
+const PROFILE_DEFAULT_VALUE = {
+  email: "demo@example.com",
+  name: "김데모",
+  bio: "하루 한 줄씩 기록 중"
+}
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     jua: require("./assets/fonts/Jua-Regular.ttf"),
@@ -76,11 +83,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.tempContainer2}>
-        <EntryForm
+        <ProfileForm
           submitButtonLabel="제출"
           onSubmit={() => {}}
           onCancel={() => {}}
           onChange={() => {}}
+          defaultValues={PROFILE_DEFAULT_VALUE}
         />
       </View>
     </View>

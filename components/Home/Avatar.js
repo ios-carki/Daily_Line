@@ -3,12 +3,20 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { GlobalStyles } from "../../constants/styles";
 
-function Avatar({ name, onEdit, style }) {
+function Avatar({ name, onEdit, size = 64, style }) {
   const initial = (name && name.trim().slice(0, 1)) || "?";
   const showBadge = !!onEdit;
+  const sizeStyle = { width: size, height: size };
+  
   return (
-    <View style={[styles.container, style]}>
-      <View style={styles.circleContainer}>
+    <View style={[sizeStyle, style]}>
+      <View
+        style={[
+          styles.circleContainer,
+          sizeStyle,
+          { borderRadius: size / 2 },
+        ]}
+      >
         <Text style={styles.initialTextStyle}>{initial}</Text>
       </View>
       {showBadge && (
@@ -27,18 +35,11 @@ function Avatar({ name, onEdit, style }) {
 export default Avatar;
 
 const styles = StyleSheet.create({
-  container: {
-    width: 64,
-    height: 64,
-  },
   circleContainer: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: GlobalStyles.colors.pink300,
-    width: 64,
-    height: 64,
     borderWidth: 2,
-    borderRadius: 32,
     borderColor: GlobalStyles.colors.ink900,
   },
   initialTextStyle: {
