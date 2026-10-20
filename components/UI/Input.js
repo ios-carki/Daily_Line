@@ -44,9 +44,9 @@ function Input({
           {...textInputProps}
           style={[
             styles.textInputTextStyle,
-            inputStyle,
             readOnly && styles.readOnlyInputTextStyle,
-            isMultilineTextInput && styles.multilineTextStyle,
+            isMultilineTextInput ? styles.multilineTextStyle : styles.singleLineTextStyle,
+            inputStyle,
           ]}
         />
       </View>
@@ -63,7 +63,9 @@ function Input({
                 <Text style={styles.errorMessageTextStyle}>{errorText}</Text>
               </View>
             )}
-            {showHelp && <Text style={styles.helpMessageTextStyle}>{help}</Text>}
+            {showHelp && (
+              <Text style={styles.helpMessageTextStyle}>{help}</Text>
+            )}
           </View>
           {showCount && (
             <Text style={styles.counterMessageTextStyle}>
@@ -114,8 +116,13 @@ const styles = StyleSheet.create({
 
   // Input
   textInputTextStyle: {
-    ...GlobalStyles.fonts.body,
+    fontFamily: GlobalStyles.fonts.body.fontFamily,
+    fontSize: GlobalStyles.fonts.body.fontSize,
     color: GlobalStyles.colors.ink900,
+  },
+  singleLineTextStyle: {
+    height: 22,
+    paddingVertical: 0,
   },
   multilineTextStyle: {
     lineHeight: 22,

@@ -3,10 +3,10 @@ import { Text, Pressable, StyleSheet } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import ShadowBox from "./ShadowBox";
 
-function Button({ children, onPress, mode = "primary", style }) {
-  const title = (
+function Button({ title, onPress, mode = "primary", style }) {
+  const titleText = (
     <Text style={[styles.textStyle, mode === "danger" && styles.dangerTextStyle]} >
-      {children}
+      {title}
     </Text>
   );
 
@@ -20,7 +20,7 @@ function Button({ children, onPress, mode = "primary", style }) {
         ]}
         onPress={onPress}
       >
-        {title}
+        {titleText}
       </Pressable>
     );
   }
@@ -36,7 +36,7 @@ function Button({ children, onPress, mode = "primary", style }) {
             mode === "danger" && styles.dangerContainer,
           ]}
         >
-          {title}
+          {titleText}
         </ShadowBox>
       )}
     </Pressable>

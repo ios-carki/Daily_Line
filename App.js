@@ -24,6 +24,7 @@ import { getToday } from "./util/date";
 import MoodPicker from "./components/Entries/MoodPicker";
 import NoteInput from "./components/Entries/NoteInput";
 import FilterChips from "./components/Entries/FilterChips";
+import AuthForm from "./components/Auth/AuthForm";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -77,7 +78,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.tempContainer2}>
-        <FilterChips entries={DUMMY_ENTRIES} value={mood} onChange={setMood}/>
+        <AuthForm isLogin={false} onSubmit={(data) => console.log(data)} onChange={() => {}}/>
       </View>
     </View>
   );
