@@ -32,11 +32,12 @@ function LoginScreen({ navigation }) {
 
       await authCtx.authenticate(loginData.token, loginData.user);
     } catch (err) {
-      setIsAuthenticating(false);
       setError(
         err.response?.data?.detail ??
           "서버에 연결할 수 없어요.\n서버가 켜져 있는지 확인해주세요.",
       );
+    } finally {
+      setIsAuthenticating(false);
     }
   }
 
@@ -72,7 +73,7 @@ function LoginScreen({ navigation }) {
           </View>
         </View>
         <AuthForm
-          isLogin={true}
+          isLogin
           onSubmit={loginHandler}
           serverError={error}
           onChange={() => setError(null)}

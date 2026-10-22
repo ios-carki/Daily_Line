@@ -44,7 +44,7 @@ function AuthForm({ isLogin, onSubmit, serverError, onChange }) {
     const nameIsValid = isLogin ? true : nameLength >= 1 && nameLength <= 20;
     const confirmIsValid = isLogin
       ? true
-      : userData.password === userData.confirm;
+      : userData.confirm !== "" && userData.password === userData.confirm;
 
     if (nameIsValid && emailIsValid && passwordIsValid && confirmIsValid) {
       onSubmit({
@@ -72,9 +72,10 @@ function AuthForm({ isLogin, onSubmit, serverError, onChange }) {
       <>
         <Input
           title="이메일"
-          placeholder="demo@example.com"
+          placeholder="you@example.com"
           keyboardType="email-address"
           autoCapitalize="none"
+          errorText="이메일 형식이 올바르지 않아요."
           autoCorrect={false}
           value={inputs.email.value}
           onChangeText={(text) => inputChangedHandler("email", text)}
@@ -83,6 +84,11 @@ function AuthForm({ isLogin, onSubmit, serverError, onChange }) {
         <Input
           title="비밀번호"
           placeholder={isLogin ? "비밀번호" : "8~32자"}
+          errorText={
+            isLogin
+              ? "비밀번호를 입력해주세요."
+              : "비밀번호는 8~32자로 입력해주세요."
+          }
           secureTextEntry
           maxLength={32}
           value={inputs.password.value}
@@ -102,7 +108,8 @@ function AuthForm({ isLogin, onSubmit, serverError, onChange }) {
       <>
         <Input
           title="이름"
-          placeholder="김데모"
+          placeholder="닉네임 (1~20자)"
+          errorText="이름을 1~20자로 입력해주세요."
           maxLength={20}
           value={inputs.name.value}
           onChangeText={(text) => inputChangedHandler("name", text)}
@@ -112,7 +119,12 @@ function AuthForm({ isLogin, onSubmit, serverError, onChange }) {
         <PasswordMeter level={getStrength(inputs.password.value)} />
         <Input
           title="비밀번호 확인"
-          placeholder="동일한 비밀번호를 입력하세요."
+          placeholder="한 번 더 입력"
+          errorText={
+            inputs.confirm.value.length === 0
+              ? "비밀번호를 확인해주세요."
+              : "비밀번호가 서로 달라요."
+          }
           secureTextEntry
           maxLength={32}
           value={inputs.confirm.value}

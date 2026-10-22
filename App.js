@@ -1,7 +1,6 @@
 import { useFonts } from "expo-font";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -20,13 +19,33 @@ SplashScreen.preventAutoHideAsync();
 
 function AuthStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: GlobalStyles.colors.paper50,
+        },
+        headerTitleStyle: {
+          ...GlobalStyles.fonts.header,
+          color: GlobalStyles.colors.ink900,
+        },
+        headerBackButtonDisplayMode: "minimal",
+        headerTintColor: GlobalStyles.colors.ink900,
+        headerShadowVisible: false,
+        contentStyle: { backgroundColor: GlobalStyles.colors.paper50 },
+      }}
+    >
       <Stack.Screen
         name="Login"
         component={LoginScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Signup" component={SignupScreen} />
+      <Stack.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={{
+          headerTitle: "회원가입",
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -65,29 +84,10 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <AuthContextProvider>
         <Navigation />
       </AuthContextProvider>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: GlobalStyles.colors.paper50,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 16,
-  },
-  tempContainer: {
-    flexDirection: "row",
-    gap: 12,
-    width: "100%",
-  },
-  tempContainer2: {
-    gap: 12,
-    width: "100%",
-  },
-});
