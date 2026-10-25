@@ -15,6 +15,8 @@ import AccountScreen from "./screens/AccountScreen";
 import { defaultScreenOptions } from "./constants/navigationOptions";
 import { fetchMe } from "./api/user";
 import { tokenStorage } from "./util/token-storage";
+import EditProfileScreen from "./screens/EditProfileScreen";
+import WithdrawScreen from "./screens/WithdrawScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -52,6 +54,16 @@ function HomeStack() {
         name="Account"
         component={AccountScreen}
         options={{ headerTitle: "계정" }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ headerTitle: "프로필 수정", presentation: "modal" }}
+      />
+      <Stack.Screen
+        name="Withdraw"
+        component={WithdrawScreen}
+        options={{ headerTitle: "회원 탈퇴" }}
       />
     </Stack.Navigator>
   );
