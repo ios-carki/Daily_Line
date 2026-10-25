@@ -1,5 +1,5 @@
 import { useFonts } from "expo-font";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,6 +11,10 @@ import LoginScreen from "./screens/LoginScreen";
 import AuthContextProvider, { AuthContext } from "./store/auth-context";
 import HomeScreen from "./screens/HomeScreen";
 import SignupScreen from "./screens/SignupScreen";
+import AccountScreen from "./screens/AccountScreen";
+import { defaultScreenOptions } from "./constants/navigationOptions";
+import { fetchMe } from "./api/user";
+import { tokenStorage } from "./util/token-storage";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -19,21 +23,7 @@ SplashScreen.preventAutoHideAsync();
 
 function AuthStack() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: GlobalStyles.colors.paper50,
-        },
-        headerTitleStyle: {
-          ...GlobalStyles.fonts.header,
-          color: GlobalStyles.colors.ink900,
-        },
-        headerBackButtonDisplayMode: "minimal",
-        headerTintColor: GlobalStyles.colors.ink900,
-        headerShadowVisible: false,
-        contentStyle: { backgroundColor: GlobalStyles.colors.paper50 },
-      }}
-    >
+    <Stack.Navigator screenOptions={defaultScreenOptions}>
       <Stack.Screen
         name="Login"
         component={LoginScreen}
@@ -50,16 +40,79 @@ function AuthStack() {
   );
 }
 
+function HomeStack() {
+  return (
+    <Stack.Navigator screenOptions={defaultScreenOptions}>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Account"
+        component={AccountScreen}
+        options={{ headerTitle: "계정" }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function AuthenticatedStack() {
   return (
     <BottomTabs.Navigator>
-      <BottomTabs.Screen name="Home" component={HomeScreen} />
+      <BottomTabs.Screen
+        name="Home"
+        component={HomeStack}
+        options={{ headerShown: false }}
+      />
     </BottomTabs.Navigator>
   );
 }
 
 function Navigation() {
+  const [fontsLoaded] = useFonts({
+    jua: require("./assets/fonts/Jua-Regular.ttf"),
+    pretendard: require("./assets/fonts/Pretendard-Regular.otf"),
+    "pretendard-semibold": require("./assets/fonts/Pretendard-SemiBold.otf"),
+    "pretendard-bold": require("./assets/fonts/Pretendard-Bold.otf"),
+    "gowun-bold": require("./assets/fonts/GowunBatang-Bold.ttf"),
+  });
   const authCtx = useContext(AuthContext);
+  const [isRestoring, setIsRestoring] = useState(true);
+
+  useEffect(() => {
+    async function restore() {
+      try {
+        const token = await tokenStorage.load();
+
+        if (!token) {
+          return;
+        }
+        const user = await fetchMe(token);
+
+        await authCtx.authenticate(token, user);
+      } catch (err) {
+        if (err.response?.status === 401) {
+          await tokenStorage.clear();
+        }
+      } finally {
+        setIsRestoring(false);
+      }
+    }
+    restore();
+  }, []);
+
+  const isReady = fontsLoaded && !isRestoring;
+
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
+    return null;
+  }
 
   return (
     <NavigationContainer>
@@ -69,25 +122,10 @@ function Navigation() {
 }
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    jua: require("./assets/fonts/Jua-Regular.ttf"),
-    pretendard: require("./assets/fonts/Pretendard-Regular.otf"),
-    "pretendard-semibold": require("./assets/fonts/Pretendard-SemiBold.otf"),
-    "pretendard-bold": require("./assets/fonts/Pretendard-Bold.otf"),
-    "gowun-bold": require("./assets/fonts/GowunBatang-Bold.ttf"),
-  });
-
-  useEffect(() => {
-    if (fontsLoaded) SplashScreen.hideAsync();
-  }, [fontsLoaded]);
-  if (!fontsLoaded) return null;
-
   return (
-    <>
+    <AuthContextProvider>
+      <Navigation />
       <StatusBar style="dark" />
-      <AuthContextProvider>
-        <Navigation />
-      </AuthContextProvider>
-    </>
+    </AuthContextProvider>
   );
 }
