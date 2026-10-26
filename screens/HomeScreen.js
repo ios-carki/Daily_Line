@@ -7,6 +7,7 @@ import CircleButton from "../components/UI/CircleButton";
 import { getDateParts, getToday } from "../util/date";
 import Avatar from "../components/Home/Avatar";
 import { AuthContext } from "../store/auth-context";
+import { EntriesContext } from "../store/entries-context";
 import StatsRow from "../components/Home/StatsRow";
 import { fetchEntries } from "../api/entry";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
@@ -20,21 +21,21 @@ function HomeScreen({ navigation }) {
   const { month, day, weekdayLong } = getDateParts(getToday());
   const todayLabel = `${month}월 ${day}일 ${weekdayLong}`;
   const authCtx = useContext(AuthContext);
+  const entriesCtx = useContext(EntriesContext);
   const insets = useSafeAreaInsets();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const isBioEmpty = authCtx.user.bio.length === 0;
 
-  const [entries, setEntries] = useState([]);
+  const entries = entriesCtx.entries;
   const isEntryEmpty = entries.length === 0;
 
   function pushToAccountHandler() {
     navigation.navigate("Account");
   }
 
-  //Todo
-  function pushToManageEntryHandler() {
-    navigation.navigate("Account");
+  function pushToManageEntryHandler(entryId) {
+    navigation.navigate("ManageEntry", entryId ? { entryId } : undefined);
   }
 
   async function getEntries() {
@@ -44,7 +45,7 @@ function HomeScreen({ navigation }) {
       const token = authCtx.token;
       const userEntries = await fetchEntries(token);
 
-      setEntries(userEntries);
+      entriesCtx.setEntries(userEntries);
     } catch (err) {
       if (err.response?.status === 401) {
         await authCtx.logout();
@@ -107,7 +108,7 @@ function HomeScreen({ navigation }) {
           <EmptyDataView
             message={"첫 한 줄을 남기면\n여기에 스티커처럼 붙어요"}
             linkText="한 줄 쓰러 가기"
-            onPress={pushToManageEntryHandler}
+            onPress={() => pushToManageEntryHandler()}
           />
         ) : (
           <ScrollView
@@ -117,7 +118,12 @@ function HomeScreen({ navigation }) {
             contentContainerStyle={styles.noteCardContentContainerStyle}
           >
             {entries.slice(0, 5).map((entry, index) => (
-              <NoteCard key={entry.id} entry={entry} index={index} />
+              <NoteCard
+                key={entry.id}
+                entry={entry}
+                index={index}
+                onPress={() => pushToManageEntryHandler(entry.id)}
+              />
             ))}
           </ScrollView>
         )}

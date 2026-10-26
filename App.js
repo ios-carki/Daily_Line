@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { GlobalStyles } from "./constants/styles";
 import LoginScreen from "./screens/LoginScreen";
 import AuthContextProvider, { AuthContext } from "./store/auth-context";
+import EntriesContextProvider from "./store/entries-context";
 import HomeScreen from "./screens/HomeScreen";
 import SignupScreen from "./screens/SignupScreen";
 import AccountScreen from "./screens/AccountScreen";
@@ -17,6 +18,7 @@ import { fetchMe } from "./api/user";
 import { tokenStorage } from "./util/token-storage";
 import EditProfileScreen from "./screens/EditProfileScreen";
 import WithdrawScreen from "./screens/WithdrawScreen";
+import ManageEntryScreen from "./screens/ManageEntryScreen";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -66,6 +68,11 @@ function AuthenticatedStack() {
         name="Main"
         component={MainTabs}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ManageEntry"
+        component={ManageEntryScreen}
+        options={{ presentation: "modal" }}
       />
       <Stack.Screen
         name="Account"
@@ -133,7 +140,13 @@ function Navigation() {
 
   return (
     <NavigationContainer>
-      {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
+      {authCtx.isAuthenticated ? (
+        <EntriesContextProvider>
+          <AuthenticatedStack />
+        </EntriesContextProvider>
+      ) : (
+        <AuthStack />
+      )}
     </NavigationContainer>
   );
 }
