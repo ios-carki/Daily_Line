@@ -7,6 +7,7 @@ export const AuthContext = createContext({
   isAuthenticated: false,
   user: null,
   authenticate: async (token, user) => {},
+  updateUser: (user) => {},
   logout: async () => {},
 });
 
@@ -20,6 +21,10 @@ function AuthContextProvider({ children }) {
     setUserData(user)
   }
 
+  function updateUser(user) {
+    setUserData(user);
+  }
+
   async function logout() {
     setAuthToken(null);
     setUserData(null)
@@ -31,6 +36,7 @@ function AuthContextProvider({ children }) {
     isAuthenticated: !!authToken,
     user: userData,
     authenticate: authenticate,
+    updateUser: updateUser,
     logout: logout,
   };
 

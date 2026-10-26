@@ -34,6 +34,10 @@ function HomeScreen({ navigation }) {
     navigation.navigate("Account");
   }
 
+  function pushToEditProfileHandler() {
+    navigation.navigate("EditProfile");
+  }
+
   function pushToEntriesHandler() {
     navigation.navigate("Entries");
   }
@@ -100,7 +104,7 @@ function HomeScreen({ navigation }) {
               {isBioEmpty ? "소개를 적어보세요" : authCtx.user.bio}
             </Text>
           </View>
-          <Avatar name={authCtx.user.name} onEdit={pushToAccountHandler} />
+          <Avatar name={authCtx.user.name} onEdit={pushToEditProfileHandler} />
         </View>
         <StatsRow entries={entries} />
         <MoodCalendar entries={entries} />
