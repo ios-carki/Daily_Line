@@ -42,12 +42,29 @@ function AuthStack() {
   );
 }
 
-function HomeStack() {
+function MainTabs() {
+  return (
+    <BottomTabs.Navigator
+      screenOptions={{
+        ...defaultScreenOptions,
+        sceneStyle: { backgroundColor: GlobalStyles.colors.paper50 },
+      }}
+    >
+      <BottomTabs.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+    </BottomTabs.Navigator>
+  );
+}
+
+function AuthenticatedStack() {
   return (
     <Stack.Navigator screenOptions={defaultScreenOptions}>
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Main"
+        component={MainTabs}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -66,18 +83,6 @@ function HomeStack() {
         options={{ headerTitle: "회원 탈퇴" }}
       />
     </Stack.Navigator>
-  );
-}
-
-function AuthenticatedStack() {
-  return (
-    <BottomTabs.Navigator>
-      <BottomTabs.Screen
-        name="Home"
-        component={HomeStack}
-        options={{ headerShown: false }}
-      />
-    </BottomTabs.Navigator>
   );
 }
 
