@@ -11,3 +11,7 @@ export const httpClient = axios.create({
 export const authHeader = (token) => ({
   headers: { Authorization: "Bearer " + token },
 });
+
+export const deleteHeader = (password) => ({
+  data: { password }
+});
