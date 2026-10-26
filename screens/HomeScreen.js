@@ -34,6 +34,10 @@ function HomeScreen({ navigation }) {
     navigation.navigate("Account");
   }
 
+  function pushToEntriesHandler() {
+    navigation.navigate("Entries");
+  }
+
   function pushToManageEntryHandler(entryId) {
     navigation.navigate("ManageEntry", entryId ? { entryId } : undefined);
   }
@@ -102,7 +106,9 @@ function HomeScreen({ navigation }) {
         <MoodCalendar entries={entries} />
         <View style={styles.sectionTitleContainer}>
           <Text style={styles.sectionTitleTextStyle}>최근 기록</Text>
-          {!isEntryEmpty && <TextLink onPress={() => {}}>전체 보기</TextLink>}
+          {!isEntryEmpty && (
+            <TextLink onPress={pushToEntriesHandler}>전체 보기</TextLink>
+          )}
         </View>
         {isEntryEmpty ? (
           <EmptyDataView

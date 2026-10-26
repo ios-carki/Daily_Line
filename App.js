@@ -6,19 +6,23 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { GlobalStyles } from "./constants/styles";
 import LoginScreen from "./screens/LoginScreen";
 import AuthContextProvider, { AuthContext } from "./store/auth-context";
 import EntriesContextProvider from "./store/entries-context";
 import HomeScreen from "./screens/HomeScreen";
 import SignupScreen from "./screens/SignupScreen";
 import AccountScreen from "./screens/AccountScreen";
-import { defaultScreenOptions } from "./constants/navigationOptions";
+import {
+  defaultScreenOptions,
+  tabScreenOptions,
+} from "./constants/navigationOptions";
 import { fetchMe } from "./api/user";
 import { tokenStorage } from "./util/token-storage";
 import EditProfileScreen from "./screens/EditProfileScreen";
 import WithdrawScreen from "./screens/WithdrawScreen";
 import ManageEntryScreen from "./screens/ManageEntryScreen";
+import EntriesScreen from "./screens/EntriesScreen";
+import TabIcon from "./components/UI/TabIcon";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -46,16 +50,26 @@ function AuthStack() {
 
 function MainTabs() {
   return (
-    <BottomTabs.Navigator
-      screenOptions={{
-        ...defaultScreenOptions,
-        sceneStyle: { backgroundColor: GlobalStyles.colors.paper50 },
-      }}
-    >
+    <BottomTabs.Navigator screenOptions={tabScreenOptions}>
       <BottomTabs.Screen
         name="Home"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon="home" label="홈" />
+          ),
+        }}
+      />
+      <BottomTabs.Screen
+        name="Entries"
+        component={EntriesScreen}
+        options={{
+          title: "한 줄 기록",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon="journal" label="한 줄 기록" />
+          ),
+        }}
       />
     </BottomTabs.Navigator>
   );
